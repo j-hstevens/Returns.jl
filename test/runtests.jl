@@ -1,6 +1,6 @@
 using Returns
 using Test
-using Distributions, Random, LinearAlgebra, CSV, DataFrames, StatsBase, Base.Threads
+using Distributions, Random, LinearAlgebra, CSV, DataFrames, StatsBase
 
 @testset "Returns.jl" begin
     #1.a Load Key Files
