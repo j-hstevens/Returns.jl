@@ -1,19 +1,19 @@
 using Returns
 using Test
-using Distributions, Random, LinearAlgebra
+using Distributions, Random, LinearAlgebra, CSV, DataFrames
 
 @testset "Returns.jl" begin
-    t = 50
+    #1.a Load Key Files
+    ltcmas = CSV.File("assets/" .* readdir("assets/")) |> DataFrame
+    #1.b Set time(t), simulations(sims),
+    t = 100
     sims = 1000
-    means = collect(0.01:0.01:0.1)
-    vols = zeros(length(means)) .+ 0.05
-    correls = LowerTriangular(rand(Normal(-.05, 0.05), length(means), length(vols)))
-    correls = correls + UpperTriangular(correls')
-
-    for i=1:size(correls,1)
-        correls[i,i] = 1.0
-    end
-
+    #1.c Load annual means(means), annual volaility(vols) and correlations
+    means = ltcmas."Arithmetic Return 2022 (%)" ./ 100
+    vols = ltcmas."Annualized Volatility (%)" ./ 100
+    correls = LowerTriangular(Array(ltcmas[:, Between("U.S. Inflation","Gold")]))
+    correls = min.(correls + correls', 1.0)
+    #2 Create Returns
     returns = CholeskyReturns(t, sims, means, vols, correls)
 
     allmeans = [[mean(returns[:,i,j]) for i=1:length(means)] for j=1:sims]
