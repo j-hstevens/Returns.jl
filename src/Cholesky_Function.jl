@@ -1,7 +1,7 @@
-using Distributions, Random, StatsBase, LinearAlgebra, Base.Threads
+using ..Distributions, ..Random, ..StatsBase, ..LinearAlgebra, ..Base.Threads
 
 function CholeskyReturns(t::Int64, sims::Int64, means::Vector{Float64},
-    vols::Vector{Float64}, correls::Matrix{Float64}; threading=1)
+    vols::Vector{Float64}, correls::Matrix{Float64}; threading=0)
 
     #Pre-Allocate returns
     returns = zeros(t, length(means), sims)

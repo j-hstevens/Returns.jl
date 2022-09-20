@@ -21,7 +21,7 @@ using Distributions, Random, LinearAlgebra, CSV, DataFrames, StatsBase, Base.Thr
     rvols = [mean([i[j] for i in allvols]) for j in 1:length(means)]
     rmeans = [mean([i[j] for i in allmeans]) for j in 1:length(means)]
 
-    @test maximum(abs.(rvols - vols)) <= 0.01
-    @test maximum(abs.(rmeans - means)) <= 0.01
+    @test maximum(abs.(rvols - vols)) <= 0.1
+    @test maximum(abs.(rmeans - means)) <= 0.1
 
 end #test
