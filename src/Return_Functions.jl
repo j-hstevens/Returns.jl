@@ -1,7 +1,7 @@
 using Distributions, Random, StatsBase, LinearAlgebra
 
 function CholeskyReturns(t::Int64, sims::Int64, means::Vector{Float64},
-    vols::Vector{Float64}, correls::Matrix{Float64})
+    vols::Vector{Float64}, correls::Matrix{Float64}; seed=123)
 
     #Pre-Allocate returns
     returns = zeros(t, length(means), sims)
@@ -15,9 +15,12 @@ function CholeskyReturns(t::Int64, sims::Int64, means::Vector{Float64},
     #Generate the returns in a normal distribution, multiply by the cholesky...
     #matrix and add the means back to the now correlated distribution
 
+    #Set the seed
+    Random.seed!(seed)
+
     #Check if threading is desired
     for i in 1:sims
-        returns[:,:,i] = rand!(Normal(0,1), returns[:,:,i]) * chol + mean
+        returns[:,:,i] = randn!(returns[:,:,i]) * chol + mean
     end #i
     return returns
 end #function

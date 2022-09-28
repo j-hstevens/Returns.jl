@@ -1,6 +1,6 @@
 module Returns
 
-include("Cholesky_Function.jl")
+include("Return_Functions.jl")
 export CholeskyReturns
 
 end #module
